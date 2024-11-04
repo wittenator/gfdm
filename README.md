@@ -1,4 +1,4 @@
-<h1 align="center">Generative Fractional Diffusion \\ Models</h1> 
+<h1 align="center">Generative Fractional Diffusion <br> Models</h1> 
 
 <h1 align="center">(NeurIPS 2024) </h1>
 
