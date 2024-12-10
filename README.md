@@ -14,7 +14,9 @@ Our experiments demonstrate that, compared to purely Brownian dynamics, the supe
 
 To run this code, install the latest project conda environment stored in `gfdm.yml` via 
 
-`conda env create -f gfdm.yml` 
+```python
+conda env create -f gfdm.yml
+```
 
 ## Train on Custom Datasets 
 
