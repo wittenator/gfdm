@@ -1,6 +1,6 @@
 <h1 align="center">Generative Fractional Diffusion Models <br> (NeurIPS 2024) </h1> 
 
-This repository contains the official implementation of the paper [Generative Fractional Diffusion Models](https://arxiv.org/abs/2310.17638) (GFDM), which introduces a continuous-time diffusion model driven by Markov approximate fractional Brownian motion, replacing the standard Brownian motion used in traditional diffusion models.
+This repository contains the official implementation of the paper [Generative Fractional Diffusion Models](https://arxiv.org/abs/2310.17638) (GFDM), introducing a continuous-time diffusion model driven by Markov approximate fractional Brownian motion, replacing the standard Brownian motion used in traditional diffusion models.
 
 ## Introduction
 Fractional Brownian motion interpolates between the paths of Brownian-driven SDEs and those of the underlying integration in probability flow ODEs, while also offering even rougher paths:
