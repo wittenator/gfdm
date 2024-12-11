@@ -42,7 +42,7 @@ def args_base():
     ap.add_argument("--wb_project", type=str, default="gfdm", description='wandb project name')
     ap.add_argument("--wb_id", type=str, default="", description='run id - randomly assigned if not specified')
     ap.add_argument("--name", type=str, default="")
-    ap.add_argument("--output_dir", type=str, default=".", description='dir to save checkpoints')
+    ap.add_argument("--output_dir", type=str, default="./runs", description='dir to save checkpoints')
     ap.add_argument("--data_dir", type=str, default="./data")
 
     # diffusion process parameters
