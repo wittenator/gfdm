@@ -22,64 +22,6 @@ from model_zoo.utils import get_model
 from utils.operation import scale_img_inv
 from args import args_all_gen
 
-'''
-def get_save_dir(
-    output_dir,
-    data_name,
-    dynamics,
-    norm,
-    model_name,
-    mode,
-    steps,
-    version,
-    run_id,
-    num_aug,
-    hurst,
-    **kwargs,
-):
-    args = map(
-        str,
-        [
-            output_dir,
-            data_name,
-            dynamics,
-            norm,
-            model_name,
-            mode,
-            steps,
-            version,
-            run_id,
-            num_aug,
-            hurst,
-        ],
-    )
-    (
-        output_dir,
-        data_name,
-        dynamics,
-        norm,
-        model_name,
-        mode,
-        steps,
-        version,
-        run_id,
-        num_aug,
-        hurst,
-    ) = args
-    return os.path.join(
-        output_dir,
-        "test_data",
-        data_name,
-        dynamics,
-        f"norm_{norm}",
-        model_name,
-        mode,
-        steps,
-        f"{version}_{run_id}_K{num_aug}_H{hurst}",
-        "",
-    )
-'''
-
 def get_save_dir(train_dir, version, mode, steps):
     return os.path.join(
         train_dir,
