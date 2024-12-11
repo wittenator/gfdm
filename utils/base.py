@@ -139,7 +139,7 @@ def init_train_wandb(args):
     os.environ["WANDB_DISABLE_GIT"] = 'true'
     os.environ["WANDB_DISABLE_CODE"] = 'true'
 
-    return wandb_logger
+    return wandb_logger, wb_id
 
 def init_generation_wandb(args):
 
