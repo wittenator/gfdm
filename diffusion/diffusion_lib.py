@@ -370,6 +370,9 @@ class FVE(FractionalDiffusion):
         return log_prob
 
     def compute_cov(self, t):
+
+        """Computes covariance matrix according to Appendix B Forward sampling"""
+
         bs = t.shape[0]
         sigma_t = torch.zeros(bs, self.aug_dim, self.aug_dim)
         XYk = self.compute_XYl(t, self.omega_i, self.gamma_i, self.gamma_j)
@@ -386,6 +389,8 @@ class FVE(FractionalDiffusion):
 
     def compute_Ik(self, t, gamma_k):
 
+        """Implements eq. (106) - eq. (107)"""
+
         a = self.a.clone()
         r = self.r.clone()
 
@@ -399,6 +404,8 @@ class FVE(FractionalDiffusion):
         return part1 - part2
 
     def compute_Iij(self, t, gamma_i, gamma_j):
+
+        """Implements eq. (110) - eq. (111)"""
 
         a = self.a.clone()
         r = self.r.clone()
@@ -419,6 +426,9 @@ class FVE(FractionalDiffusion):
         return scale * (part1 - part2 - part3 + part4)
 
     def compute_covXiXj(self, t):
+
+        """Calculates the variance of X_t for FVE dynamics by eq. (91) - eq. (97)"""
+
         offset = self.sigma_min ** 2
         Ii = self.compute_Ik(t[:, :, 0], self.gamma_i[:, :, 0])[:, :, None]
         Ij = self.compute_Ik(t[:, 0, :], self.gamma_j[:, 0, :])[:, None, :]
@@ -435,6 +445,8 @@ class FVE(FractionalDiffusion):
         return self.compute_covXiXj(t)
 
     def compute_XYl(self, t, omega_k, gamma_k, gamma_l):
+
+        """Calculates the covariance of X and Y^{l} for FVE dynamics by eq. (112) - eq. (117)"""
 
         a = self.a.clone()
         r = self.r.clone()

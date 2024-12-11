@@ -57,20 +57,30 @@ def run_training(
     This method provides generic training for a specific hurst index, given some dataset splits.
 
     Args:
-        train_ds: training dataset split
-        test_ds: testing dataset split (used for metrics)
-        model_fn: some neural network that forms the backbone of the reverse process
+        model_fn: a score model
+        train_ds: training dataset
+        wandb_logger: lightning wandb logger
+        hurst: Hurst index
+        dynamics: dynamics of diffusion process
         train_steps: number of training steps
-        wandb_logger:
-        batch_size: size of the effective batch in memory (without accumulating gradients)
-        num_workers: number of concurrent data-loading processes
-        device: device to accelerate floating point operations
-        val_every_n:
-        enable_progress_bar:
-        num_sanity_val_steps:
-        gradient_clip_val:
-        *args: placeholder for duck-typing
-        **kwargs: placeholder for duck-typing
+        sample_steps: sampling steps used in validation step
+        val_check_interval: frequency of validation step during training
+        gamma_max: maximal gamma used for MA-fBM
+        num_aug: number of additional processes
+        lr: learning rate
+        use_lr_scheduler: whether to use OneCycleLR
+        train_steps: number of training steps
+        bs_sample: sampling batch size in validation step
+        data_name: name of dataset used for training
+        conditioning: whether to train a class-conditional score model
+        use_ema: whether to use EMA for training
+        batch_size: taining batch_size
+        log_model_every_n: save checkpoint every log_model_every_n training steps
+        output_dir: dir to save checkpoints
+        enable_progress_bar: whether to use progress bar during training
+        num_sanity_val_steps: whether to do a validation step before starting the training
+        gradient_clip_val: value for gradient clipping during training
+        norm: whether to normalize the terminal variance of the diffusion process across all values of H
     Return:
         a trained generative fractional diffusion model
     """
@@ -162,10 +172,10 @@ def run_training(
         path = f"{output_dir}/model"
         if not os.path.isdir(path):
             os.makedirs(path)
-        model_path = f"{path}/model-backup.pth"
+        model_path = f"{path}/model-final.pth"
         torch.save(gfdm.score_fn.state_dict(), model_path)
         if use_ema:
-            ema_path = f"{path}/ema_model-backup.pth"
+            ema_path = f"{path}/ema_model-final.pth"
             torch.save(gfdm.ema.state_dict(), ema_path)
 
     print(f"H={hurst}: completed")

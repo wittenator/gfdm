@@ -1,9 +1,10 @@
+"""
+author: Rembert Daems
+"""
+
+
 import torch
 import torch.special as ts
-
-"""
-authors: Rembert Daems 
-"""
 
 
 def omega_optimized(
@@ -16,8 +17,8 @@ def omega_optimized(
         gamma: quadrature values of the speed of mean reversion
         hurst: hurst-index
         time_horizon: time-horizon / largest time-step that is considered
-        return_cost: of specified, the cost of the approximation is returned as well
-        return_cost: of specified, the matrix A and the vector b is returned as well
+        return_cost: iff specified, the cost of the approximation is returned as well
+        return_Ab: if specified, the matrix A and the vector b is returned as well
     Return:
         Approximation of the quadrature values, needed to approximate fractional brownian motion in markovian setting.
     """
