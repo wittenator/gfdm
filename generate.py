@@ -84,7 +84,7 @@ def get_save_dir(train_dir, version, mode, steps):
     return os.path.join(
         train_dir,
         'generated_data',
-        version,
+        f'model-{version}',
         f'{mode}{steps}'
     )
 
