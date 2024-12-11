@@ -38,19 +38,19 @@ def args_base():
     )
 
     # wandb
-    ap.add_argument("--wb_key", type=str, default="", description='personal wandb key')
-    ap.add_argument("--wb_project", type=str, default="gfdm", description='wandb project name')
-    ap.add_argument("--wb_id", type=str, default="", description='run id - randomly assigned if not specified')
+    ap.add_argument("--wb_key", type=str, default="", help='personal wandb key')
+    ap.add_argument("--wb_project", type=str, default="gfdm", help='wandb project name')
+    ap.add_argument("--wb_id", type=str, default="", help='run id - randomly assigned if not specified')
     ap.add_argument("--name", type=str, default="")
-    ap.add_argument("--output_dir", type=str, default="./runs", description='dir to save checkpoints')
+    ap.add_argument("--output_dir", type=str, default="./runs", help='dir to save checkpoints')
     ap.add_argument("--data_dir", type=str, default="./data")
 
     # diffusion process parameters
-    ap.add_argument("--dynamics", type=str, default="fvp", choices=["fve", "fvp"], description='dynamics of diffusion process')
-    ap.add_argument("--num_aug", type=int, default=2, description='number of additional processes')
-    ap.add_argument("--hurst", type=float, default=0.9, description='Hurst index')
-    ap.add_argument("--gamma_max", type=float, default=20.0, description='maximal gamma used for MA-fBM')
-    ap.add_argument("--norm", type=str2bool, default=True, description='whether to normalize the terminal variance of the diffusion process across all values of H')
+    ap.add_argument("--dynamics", type=str, default="fvp", choices=["fve", "fvp"], help='dynamics of diffusion process')
+    ap.add_argument("--num_aug", type=int, default=2, help='number of additional processes')
+    ap.add_argument("--hurst", type=float, default=0.9, help='Hurst index')
+    ap.add_argument("--gamma_max", type=float, default=20.0, help='maximal gamma used for MA-fBM')
+    ap.add_argument("--norm", type=str2bool, default=True, help='whether to normalize the terminal variance of the diffusion process across all values of H')
 
     # data parameters
     ap.add_argument(
