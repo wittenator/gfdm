@@ -1,8 +1,8 @@
 """
-
 author: Maximilian Springenberg
-association: Fraunhofer HHI
+copyright: Fraunhofer HHI
 """
+
 import socket
 from functools import partial
 import os

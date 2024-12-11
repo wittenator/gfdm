@@ -1,3 +1,8 @@
+"""
+authors: Gabriel Nobis & Maximilian Springenberg
+copyright: Fraunhofer HHI
+"""
+
 import model_zoo
 
 

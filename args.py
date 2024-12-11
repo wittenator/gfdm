@@ -1,3 +1,9 @@
+"""
+authors: Gabriel Nobis & Maximilian Springenberg
+copyright: Fraunhofer HHI
+"""
+
+
 from argparse import ArgumentParser
 from multiprocessing import cpu_count
 
@@ -32,19 +38,19 @@ def args_base():
     )
 
     # wandb
-    ap.add_argument("--wb_key", type=str, default="")
-    ap.add_argument("--wb_project", type=str, default="gfdm")
-    ap.add_argument("--wb_id", type=str, default="")
+    ap.add_argument("--wb_key", type=str, default="", description='personal wandb key')
+    ap.add_argument("--wb_project", type=str, default="gfdm", description='wandb project name')
+    ap.add_argument("--wb_id", type=str, default="", description='run id - randomly assigned if not specified')
     ap.add_argument("--name", type=str, default="")
-    ap.add_argument("--output_dir", type=str, default=".")
+    ap.add_argument("--output_dir", type=str, default=".", description='dir to save checkpoints')
     ap.add_argument("--data_dir", type=str, default="./data")
 
     # diffusion process parameters
-    ap.add_argument("--dynamics", type=str, default="fvp", choices=["fve", "fvp"])
-    ap.add_argument("--num_aug", type=int, default=2)
-    ap.add_argument("--hurst", type=float, default=0.9)
-    ap.add_argument("--gamma_max", type=float, default=20.0)
-    ap.add_argument("--norm", type=str2bool, default=True)
+    ap.add_argument("--dynamics", type=str, default="fvp", choices=["fve", "fvp"], description='dynamics of diffusion process')
+    ap.add_argument("--num_aug", type=int, default=2, description='number of additional processes')
+    ap.add_argument("--hurst", type=float, default=0.9, description='Hurst index')
+    ap.add_argument("--gamma_max", type=float, default=20.0, description='maximal gamma used for MA-fBM')
+    ap.add_argument("--norm", type=str2bool, default=True, description='whether to normalize the terminal variance of the diffusion process across all values of H')
 
     # data parameters
     ap.add_argument(
@@ -116,28 +122,6 @@ def args_train(ap=None):
     )
     ap.add_argument("--bs_sample", type=int, default=20)
 
-    ap.add_argument(
-        "--metrics",
-        type=str,
-        nargs="+",
-        default=[],
-        choices=[
-            "P",
-            "R",
-            "WSD",
-            "FLS",
-            "FID",
-            "IP",
-            "IR",
-            "NLL",
-            "AuthPct",
-            "CTScore",
-            "KID",
-            "VS",
-        ],
-        help="A list of scores to calculcate. Examplary usage: --metrics WSD FID VS",
-    )
-
     return ap
 
 
@@ -164,18 +148,6 @@ def args_gen(ap=None):
     # showing and logging
     ap.add_argument("--show_samples", type=str2bool, default=False)
     ap.add_argument("--log_samples", type=int, default=2)
-
-    ap.add_argument(
-        "--metrics",
-        type=str,
-        nargs="+",
-        default=["NLL"],
-        choices=["P", "R", "WSD", "FID", "IS", "NLL", "VS"],
-        help="A list of scores to calculcate. Examplary usage: --metrics WSD FID VS",
-    )
-    ap.add_argument("--nll_on_test_set", type=str2bool, default=False)
-    ap.add_argument("--nll_step", type=int, default=1)
-    ap.add_argument("--fid_on_test", type=str2bool, default=False)
 
     return ap
 

@@ -1,5 +1,5 @@
 """
-author: Maximilian Springenberg
+authors: Maximilian Springenberg & Gabriel Nobis
 copyright: Fraunhofer HHI
 """
 

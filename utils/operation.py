@@ -1,3 +1,9 @@
+"""
+authors: Gabriel Nobis & Maximilian Springenberg
+copyright: Fraunhofer HHI
+"""
+
+
 import torch
 
 from torch.distributions.multivariate_normal import MultivariateNormal

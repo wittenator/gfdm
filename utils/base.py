@@ -1,3 +1,8 @@
+"""
+authors: Gabriel Nobis & Maximilian Springenberg
+copyright: Fraunhofer HHI
+"""
+
 import random
 import string
 import torch

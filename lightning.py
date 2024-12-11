@@ -101,13 +101,10 @@ class GFDMLit(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
 
-        ############## TODO
         if isinstance(batch, tuple) or isinstance(batch, list):
             batch, *args = batch
-        #####
         else:
             args = []
-        #####
 
         t = (
             torch.rand(batch.shape[0], device=self.rank) * (self.diffusion.T - self.eps)
