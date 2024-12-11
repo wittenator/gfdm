@@ -157,10 +157,16 @@ def init_generation_wandb(args):
     wandb.login(key=args.wb_key)
 
     wb_id = ''.join(random.choice(string.digits) for _ in range(6)) if args.wb_id == '' else args.wb_id
+
+    train_name = get_wb_init(
+        args.data_name, args.hurst, args.num_aug
+    )
+    train_dir = args.run_id + train_name
+
     wb_name = f'{wb_id}_{args.run_id}_generation_H{args.hurst}_K{args.num_aug}_{args.mode}{args.steps}'
     wandb_logger = WandbLogger(project=args.wb_project, name=wb_name, id=wb_id, config=args)
 
-    return wandb_logger, wb_name, wb_id
+    return wandb_logger, wb_name, wb_id, train_dir
 
 def init_eval_weights_biases(args,version=None):
 

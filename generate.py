@@ -22,7 +22,7 @@ from model_zoo.utils import get_model
 from utils.operation import scale_img_inv
 from args import args_all_gen
 
-
+'''
 def get_save_dir(
     output_dir,
     data_name,
@@ -78,21 +78,30 @@ def get_save_dir(
         f"{version}_{run_id}_K{num_aug}_H{hurst}",
         "",
     )
+'''
 
-
-def get_model_path(run_id, version, **kwargs):
-    return os.path.join("runs", f"tc2_gfdm-{run_id}", "model", f"model-{version}.pth")
-
-
-def get_ema_path(run_id, version, **kwargs):
+def get_save_dir(train_dir, version, mode, steps):
     return os.path.join(
-        "runs", f"tc2_gfdm-{run_id}", "model", f"ema_model-{version}.pth"
+        train_dir,
+        'generated_data',
+        version,
+        f'{mode}{steps}'
+    )
+
+
+def get_model_path(output_dir, version, **kwargs):
+    return os.path.join(output_dir, "model", f"model-{version}.pth")
+
+
+def get_ema_path(output_dir, version, **kwargs):
+    return os.path.join(
+        output_dir, "model", f"ema_model-{version}.pth"
     )
 
 def generate_data(args):
 
     # wandb login
-    wandb_logger, wb_name, wb_id = init_generation_wandb(args)
+    wandb_logger, wb_name, wb_id, train_dir = init_generation_wandb(args)
 
     # get device of current rank
     device = get_device(args.device)
@@ -175,14 +184,13 @@ def generate_data(args):
             W=args.image_size,
         )
         data_tensor = data_tensor.cpu().numpy().transpose(0, 2, 3, 1)
-        data_tenspr = data_tensor[: args.n_samples]
         label_tensor = einops.rearrange(
             label_tensor, "I B -> (I B)", I=n_iter, B=args.batch_size
         )
         label_tensor = label_tensor.cpu().numpy()
         label_tensor = label_tensor[: args.n_samples]
     # saving samples
-    save_dir = get_save_dir(**vars(args))
+    save_dir = get_save_dir(train_dir, args.version, args.mode, args.steps)
     stamp = "".join(random.choice(string.digits) for _ in range(6))
     # path sanity
     Path(os.path.join(save_dir, "data")).mkdir(parents=True, exist_ok=True)

@@ -132,11 +132,11 @@ def args_gen(ap=None):
     ap.add_argument("--dir_num", type=str, default=None)
 
     # wandb parameters
-    ap.add_argument("--version", type=str, default="v0")
+    ap.add_argument("--version", type=str, default="final")
     ap.add_argument("--wb_version", type=str, default="v0")
 
     ap.add_argument("--pth", type=str, default=None)
-    ap.add_argument("--run_id", type=int, default=1274648)
+    ap.add_argument("--run_id", type=int, default=000000)
 
     # sampling parameters
     ap.add_argument("--steps", type=int, default=1000)
