@@ -10,7 +10,7 @@ data
 tmp
 lightning_logs
 wandb
-runs
+runs/*
 out
 
 *.ckpt
