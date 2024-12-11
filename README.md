@@ -20,7 +20,7 @@ conda env create -f gfdm.yml
 
 ## Train on Custom Datasets 
 
-You can use our repository to train GFDM on `mnist`, `fashionmnist` and `cifar10`. To train on your custom dataset add in `train.get_dataset` your dataset named `yourdataset` to the constructure:
+You can use our repository to train GFDM on `mnist`, `fashionmnist` and `cifar10`. To train on your custom dataset add in `train.get_dataset` your dataset named `yourdataset` to the constructor:
 
 ```python
     constructor = {
