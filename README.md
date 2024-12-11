@@ -69,9 +69,7 @@ For conditional image generation, we observe the best performance on MNIST and C
 
  </td></tr> </table>
 
- ## Reproduce Training
-
- ### On MNIST
+ ## Training
 
  To train on MNIST we used the following parameters:
  
@@ -79,19 +77,42 @@ For conditional image generation, we observe the best performance on MNIST and C
 python train.py --data_name mnist --channels 1 --image_size 28 --hurst 0.9 --num_aug 3 --dynamics fvp --model_channels 64 --num_res_blocks 3 --attn_resolutions 4,2 --channel_mult 1,2,4 --use_ema False --log_model_every_n 50000 --lr 1e-4 --batch_size 1024 --train_steps 50000 
 ```
 
- ### On CIFAR10
-
-  To train on CIFAR10 we used the following parameters:
+To train on CIFAR10 we used the following parameters:
 
   ```python
   python train.py --data_name cifar10 --channels 3 --image_size 32 --hurst 0.9 --num_aug 2 --dynamics fvp --model_channels 128 --num_res_blocks 4 --attn_resolutions 8 --channel_mult 1,2,2,2 --use_ema True --log_model_every_n 100000 --lr 2e-4 --batch_size 128 --train_steps 1000000 
 ```
-## Generate Data from Checkpoints
+
+## Generate Data
  
-To generate $M$ samples over $N$ steps using either `--mode=sde` or `--mode ode` with the checkpoints at `path\model-{version}.pth` and `path\ema_model-{version}.pth` run: 
+To generate $M$ samples over $N$ steps using either `--mode=sde` or `--mode ode` to sample from a trained model at 
+
+`./runs/{id}_{data_name}_H{hurst}_K{num_aug}/model/model-{version}.pth`
+
+run:
 
 ```python
-python generate.py --data_name data_name --mode sde --steps N --n_samples M --batch_size batch_size --pth path
+python generate.py --run_id id --version version --n_samples M --batch_size batch_size --steps N --data_name data_name --hurst hurst --num_aug num_aug --mode sde
+```
+
+## Sample from Pretrained Models
+
+To download the best performing models with FVP dynamics run in `gfdm/runs`:
+
+`gdown https://drive.google.com/uc?id=1OySDmN2vXe5ox4egkxLR1qZuocIlAGz3`
+
+After unzipping `pretrained_models.zip` you can sample $50k$ images from the provided pretrained models via:
+
+```python
+python generate.py --run_id 1299582 --hurst 0.9 --num_aug 2 --dynamics fvp --mode sde --version v5 --n_samples 50000 --batch_size 1000 --steps 1000 --data_name cifar10 
+```
+
+```python
+python generate.py --run_id 1299581 --hurst 0.7 --num_aug 2 --dynamics fvp --mode sde --version v5 --n_samples 50000 --batch_size 1000 --steps 1000 --data_name cifar10 
+```
+
+```python
+python generate.py --run_id 1299543 --hurst 0.5 --num_aug 0 --dynamics fvp --mode sde --version v4 --n_samples 50000 --batch_size 1000 --steps 1000 --data_name cifar10 
 ```
 
 ## Logging 
