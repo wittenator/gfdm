@@ -10,10 +10,7 @@ data
 tmp
 lightning_logs
 wandb
-GFDM*
-
-variance_schedule2.py
-eval_var_model.py
+runs
 out
 
 *.ckpt
