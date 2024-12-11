@@ -223,8 +223,8 @@ if __name__ == "__main__":
     kwargs["train_ds"], kwargs["test_ds"] = get_datasets(**kwargs)
 
     # WandB logger initialization
-    kwargs["wandb_logger"], wb_id = init_train_wandb(args)
-    args.output_dir = os.path.join(args.output_dir, wb_id)
+    kwargs["wandb_logger"], wb_name = init_train_wandb(args)
+    args.output_dir = os.path.join(args.output_dir, wb_name)
 
     # create the distributed set-up
     kwargs["port"] = dist_util.find_free_port()
