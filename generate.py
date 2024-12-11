@@ -88,14 +88,12 @@ def get_save_dir(train_dir, version, mode, steps):
         f'{mode}{steps}'
     )
 
+def get_model_path(train_dir, version):
+    return os.path.join(train_dir, "model", f"model-{version}.pth")
 
-def get_model_path(output_dir, version, **kwargs):
-    return os.path.join(output_dir, "model", f"model-{version}.pth")
-
-
-def get_ema_path(output_dir, version, **kwargs):
+def get_ema_path(train_dir, version):
     return os.path.join(
-        output_dir, "model", f"ema_model-{version}.pth"
+        train_dir, "model", f"ema_model-{version}.pth"
     )
 
 def generate_data(args):
@@ -131,8 +129,8 @@ def generate_data(args):
     )
     gfdm.to(device)
     # retrieve model paths
-    pth = get_model_path(**vars(args))
-    ema_pth = get_ema_path(**vars(args))
+    pth = get_model_path(train_dir, args.version)
+    ema_pth = get_ema_path(train_dir, args.version)
     # load trained model
     gfdm.load_model(
         pth=pth,
