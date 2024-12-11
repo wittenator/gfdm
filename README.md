@@ -23,12 +23,12 @@ conda env create -f gfdm.yml
 You can use our repository to train GFDM on `mnist`, `fashionmnist` and `cifar10`. To train on your custom dataset add in `train.get_dataset` your dataset named `yourdataset` to the constructor:
 
 ```python
-    constructor = {
-        "mnist": vision_datasets.MNIST,
-        "fashionmnist": vision_datasets.FASHIONMNIST,
-        "cifar10": vision_datasets.CIFAR10,
-        "yourdataset": CustomDataset
-    }
+constructor = {
+    "mnist": vision_datasets.MNIST,
+    "fashionmnist": vision_datasets.FASHIONMNIST,
+    "cifar10": vision_datasets.CIFAR10,
+    "yourdataset": CustomDataset
+}
 ```
 
 Additionally, you need to add `yourdataset` to the available choices for `--data_name` in `args.py`. To use our code out-of-the-box, your `CustomDataset` must inherit from the `vision_datasets.TVData` class. To train with a Hurst index $H$ and $K$ augmenting processes on your dataset of size `(c,size,size)` with `num_classes` classes, use the following command:
