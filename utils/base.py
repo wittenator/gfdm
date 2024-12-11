@@ -161,7 +161,7 @@ def init_generation_wandb(args):
     train_name = get_wb_init(
         args.data_name, args.hurst, args.num_aug
     )
-    train_dir = str(args.run_id) + train_name
+    train_dir = os.path.join(args.output_dir, str(args.run_id) + train_name)
 
     wb_name = f'{wb_id}_{args.run_id}_generation_H{args.hurst}_K{args.num_aug}_{args.mode}{args.steps}'
     wandb_logger = WandbLogger(project=args.wb_project, name=wb_name, id=wb_id, config=args)
