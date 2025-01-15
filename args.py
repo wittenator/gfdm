@@ -71,7 +71,7 @@ def args_base():
     ap.add_argument(
         "--channel_mult", type=list_of_ints, default=[1, 2, 2, 2]
     )  # for mnist [1, 2, 4]
-    ap.add_argument("--dropout", type=float, default=1.0)  # 0.0 for mnist
+    ap.add_argument("--dropout", type=float, default=0.1)  # 0.0 for mnist
 
     ap.add_argument("--use_ema", type=str2bool, default=True)
     return ap
