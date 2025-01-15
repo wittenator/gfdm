@@ -74,7 +74,7 @@ For conditional image generation, we observe the best performance on MNIST and C
  To train on MNIST we used the following parameters:
  
 ```python
-python train.py --data_name mnist --channels 1 --image_size 28 --hurst 0.9 --num_aug 3 --dynamics fvp --model_channels 64 --num_res_blocks 3 --attn_resolutions 4,2 --channel_mult 1,2,4 --use_ema False --log_model_every_n 50000 --lr 1e-4 --batch_size 1024 --train_steps 50000 
+python train.py --data_name mnist --channels 1 --image_size 28 --hurst 0.9 --num_aug 3 --dynamics fvp --model_channels 64 --num_res_blocks 3 --attn_resolutions 4,2 --channel_mult 1,2,4 --dropout 0.0 --use_ema False --log_model_every_n 50000 --lr 1e-4 --batch_size 1024 --train_steps 50000 
 ```
 
 To train on CIFAR10 we used the following parameters:
