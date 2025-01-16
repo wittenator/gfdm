@@ -34,7 +34,7 @@ constructor = {
 Additionally, you need to add `yourdataset` to the available choices for `--data_name` in `args.py`. To use our code out-of-the-box, your `CustomDataset` must inherit from the `vision_datasets.TVData` class. To train with a Hurst index $H$ and $K$ augmenting processes on your dataset of size `(c,size,size)` with `num_classes` classes, use the following command:
 
 ```python
-python train.py --data_name yourdataset --channels c --image_size size --num_classes num_classes --hurst H --num_aug K --dynamics fvp --train_steps 1000000
+python train.py --data_name yourdataset --channels c --image_size size --num_classes num_classes --log_model_every_n 100000 --val_check_interval 10000 --hurst H --num_aug K --dynamics fvp --train_steps 1000000
 ```
 
 Depending on the size of your images, consider adjusting the following default arguments of `unet.UNetModel`: 
@@ -74,13 +74,13 @@ For conditional image generation, we observe the best performance on MNIST and C
  To train on MNIST we used the following parameters:
  
 ```python
-python train.py --data_name mnist --channels 1 --image_size 28 --hurst 0.9 --num_aug 3 --dynamics fvp --model_channels 64 --num_res_blocks 3 --attn_resolutions 4,2 --channel_mult 1,2,4 --dropout 0.0 --use_ema False --log_model_every_n 50000 --lr 1e-4 --batch_size 1024 --train_steps 50000 
+python train.py --data_name mnist --channels 1 --image_size 28 --hurst 0.9 --num_aug 3 --dynamics fvp --model_channels 64 --num_res_blocks 3 --attn_resolutions 4,2 --channel_mult 1,2,4 --dropout 0.0 --use_ema False --log_model_every_n 50000 --val_check_interval 500 --lr 1e-4 --batch_size 1024 --train_steps 50000 
 ```
 
 To train on CIFAR10 we used the following parameters:
 
   ```python
-  python train.py --data_name cifar10 --channels 3 --image_size 32 --hurst 0.9 --num_aug 2 --dynamics fvp --model_channels 128 --num_res_blocks 4 --attn_resolutions 8 --channel_mult 1,2,2,2 --use_ema True --log_model_every_n 100000 --lr 2e-4 --batch_size 128 --train_steps 1000000 
+  python train.py --data_name cifar10 --channels 3 --image_size 32 --hurst 0.9 --num_aug 2 --dynamics fvp --model_channels 128 --num_res_blocks 4 --attn_resolutions 8 --channel_mult 1,2,2,2 --use_ema True --log_model_every_n 100000 --val_check_interval 10000 --lr 2e-4 --batch_size 128 --train_steps 1000000 
 ```
 
 ## Generate Data
