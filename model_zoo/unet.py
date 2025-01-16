@@ -731,10 +731,6 @@ class UNetModel(nn.Module):
 
         if y is not None:
             y = y.squeeze()
-        assert (y is not None) == (
-            self.num_classes is not None
-        ), "must specify y if and only if the model is class-conditional"
-
 
         hs = []
 
