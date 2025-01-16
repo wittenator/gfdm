@@ -8,6 +8,7 @@ import model_zoo
 
 def get_model(
     model_name,
+    conditioning,
     image_size,
     channels,
     model_channels,
@@ -21,6 +22,9 @@ def get_model(
 ):
 
     if model_name.lower() == "unet":
+
+        num_classes = num_classes if conditioning else None
+
         model = model_zoo.UNetModel(
             image_size=image_size,
             in_channels=channels,

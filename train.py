@@ -214,7 +214,6 @@ if __name__ == "__main__":
 
     # channels
     kwargs["channels"] = args.channels
-    # kwargs['channels_out'] = get_channels(**kwargs)
 
     # loading the score model architecture
     kwargs["model_fn"] = get_model(**kwargs)
