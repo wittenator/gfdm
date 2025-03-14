@@ -3,7 +3,7 @@ authors: Gabriel Nobis & Maximilian Springenberg
 copyright: Fraunhofer HHI
 """
 
-import model_zoo
+from gfdm import model_zoo
 
 
 def get_model(

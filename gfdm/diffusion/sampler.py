@@ -9,7 +9,7 @@ from tqdm import tqdm
 from contextlib import contextmanager
 
 # custom libs
-from utils.operation import matrix_vector_mp, sample_from_batch_multivariate_normal
+from gfdm.utils.operation import matrix_vector_mp, sample_from_batch_multivariate_normal
 
 
 def get_sampler(sampler_name):

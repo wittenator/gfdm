@@ -12,13 +12,13 @@ import torch
 
 # custom libs
 from args import args_all_train
-from utils.base import init_train_wandb
-from model_zoo.utils import get_model
-from diffusion.diffusion_lib import get_diffusion
-from diffusion.sampler import get_sampler
+from gfdm.utils.base import init_train_wandb
+from gfdm.model_zoo.utils import get_model
+from gfdm.diffusion.diffusion_lib import get_diffusion
+from gfdm.diffusion.sampler import get_sampler
 from lightning import GFDMLit as GFDM
 import vision_datasets
-from utils import dist_util
+from gfdm.utils import dist_util
 
 
 def run_training(

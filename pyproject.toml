@@ -1,5 +1,5 @@
 [project]
-name = "gfdm-migrate"
+name = "gfdm"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"

@@ -1,4 +1,4 @@
-from model_zoo.nn import (
+from gfdm.model_zoo.nn import (
     checkpoint,
     conv_nd,
     linear,

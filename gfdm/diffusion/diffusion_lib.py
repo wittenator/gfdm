@@ -14,7 +14,7 @@ from abc import ABC, abstractmethod
 import torch.nn as nn
 import einops
 
-from diffusion.optimal_weights import omega_optimized, gamma_by_gamma_max, gamma_by_r
+from gfdm.diffusion.optimal_weights import omega_optimized, gamma_by_gamma_max, gamma_by_r
 
 
 def device_sanity(*args, device="cuda"):

@@ -12,8 +12,8 @@ from torchvision.utils import make_grid
 from ema_pytorch import EMA
 
 # custom libs
-from utils.operation import sample_from_batch_multivariate_normal, scale_img_inv
-from diffusion.sampler import AugmentedEulerMaruyama
+from gfdm.utils.operation import sample_from_batch_multivariate_normal, scale_img_inv
+from gfdm.diffusion.sampler import AugmentedEulerMaruyama
 
 
 class GFDMLit(pl.LightningModule):

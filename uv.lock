@@ -469,7 +469,7 @@ http = [
 ]
 
 [[package]]
-name = "gfdm-migrate"
+name = "gfdm"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
