@@ -1,4 +1,4 @@
-name: gfdm
+name: gfdm_mig
 channels:
   - nvidia
   - pytorch
