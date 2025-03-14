@@ -6,7 +6,7 @@ This repository contains the official implementation of the paper [Generative Fr
 Fractional Brownian motion interpolates between the paths of Brownian-driven SDEs and those of the underlying integration in probability flow ODEs, while also offering even rougher paths:
 
 
-![cover](visuals/thumbnail.png)
+![cover](thumbnail.png)
 
 Our experiments demonstrate that, compared to purely Brownian dynamics, the super-diffusive (smooth) regime of Markov approximation of fractional Brownian motion achieves higher image quality with fewer score model evaluations, improved pixel-wise diversity and better distribution coverage.
 
