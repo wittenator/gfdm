@@ -22,7 +22,7 @@ def sample_from_batch_multivariate_normal(cov_matrix, c=2,h=1,w=1,batch_size=128
     mean = torch.zeros(batch_size, aug_dim,device=device)
 
     # Create the batch of Multivariate Normal distributions
-    mvn = MultivariateNormal(mean, covariance_matrix=cov_matrix)
+    mvn = MultivariateNormal(mean, covariance_matrix=cov_matrix.float())
 
     # Sample from the distribution
     n_samples = int(c*h*w)

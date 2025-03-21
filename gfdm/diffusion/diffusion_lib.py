@@ -44,6 +44,7 @@ def get_diffusion(
     T=1.0,
     norm=True,
     device="cpu",
+    dtype=torch.float64,
 ):
     """
     Diffusion dynamics constructor
@@ -72,6 +73,7 @@ def get_diffusion(
         T=T,
         norm=norm,
         device=device,
+        dtype=dtype,
     )
 
 
@@ -79,7 +81,7 @@ class FractionalDiffusion(ABC, nn.Module):
 
     """Abstract class for fractional diffusion processes"""
 
-    def __init__(self, H=0.5, gamma_max=20.0, K=5, T=1.0, pd_eps=1e-4, device="cpu"):
+    def __init__(self, H=0.5, gamma_max=20.0, K=5, T=1.0, pd_eps=1e-4, device="cpu", dtype=torch.float64):
         super(FractionalDiffusion, self).__init__()
 
         """parameters of fBM approximation"""
@@ -87,6 +89,7 @@ class FractionalDiffusion(ABC, nn.Module):
         self.register_buffer("gamma_max", torch.as_tensor(gamma_max, device=device))
         self.register_buffer("T", torch.as_tensor([T], device=device))
         self.K = K
+        self.dtype = dtype
 
         """parameters of augmented process"""
         self.aug_dim = K + 1
@@ -97,10 +100,10 @@ class FractionalDiffusion(ABC, nn.Module):
         if self.K > 0:
             if self.K == 1:
                 gamma = gamma_by_r(
-                    K, torch.sqrt(torch.tensor(gamma_max)), device=device
+                    K, torch.sqrt(torch.tensor(gamma_max)), device=device, dtype=dtype
                 )
             else:
-                gamma = gamma_by_gamma_max(K, self.gamma_max, device=device)
+                gamma = gamma_by_gamma_max(K, self.gamma_max, device=device, dtype=dtype)
             omega, A, b = omega_optimized(
                 gamma, self.H, self.T, return_Ab=True, device=device
             )
@@ -242,8 +245,8 @@ class FractionalDiffusion(ABC, nn.Module):
 
     def func(self, t, S):
         num_k = self.K
-        t = torch.as_tensor(t)
-        A = np.zeros((num_k + 1, num_k + 1))
+        t = torch.as_tensor(t, dtype=self.dtype)
+        A = np.zeros((num_k + 1, num_k + 1), dtype=np.float64)
         A[0, 0] = 2 * self.mu(t).cpu().numpy()
         A[0, 1:] = -2 * (self.g(t) * self.omega[0] * self.gamma[0]).cpu().numpy()
         A[1:, 1:] = np.diag((self.mu(t) - self.gamma[0]).cpu().numpy())
@@ -303,8 +306,9 @@ class FVE(FractionalDiffusion):
         T=1.0,
         norm=False,
         device="cpu",
+        dtype=torch.float64,
     ):
-        super().__init__(H=H, gamma_max=gamma_max, K=K, T=T, device=device)
+        super().__init__(H=H, gamma_max=gamma_max, K=K, T=T, device=device, dtype=dtype)
 
         print(f"DEVICE IN FVE={device}")
 
@@ -479,8 +483,9 @@ class FVP(FractionalDiffusion):
         T=1.0,
         norm=True,
         device="cpu",
+        dtype=torch.float64,
     ):
-        super().__init__(H=H, gamma_max=gamma_max, K=K, T=T, device=device)
+        super().__init__(H=H, gamma_max=gamma_max, K=K, T=T, device=device, dtype=dtype)
 
         self.name = "fvp"
         self.register_buffer(
@@ -529,7 +534,7 @@ class FVP(FractionalDiffusion):
         cov = np.zeros((self.K + 1, self.K + 1, t.shape[0]))
         cov[0, :, :] = S
         cov[:, 0, :] = S
-        sigma_t = torch.from_numpy(cov.astype(np.float32)).to(t.device).permute(2, 1, 0)
+        sigma_t = torch.from_numpy(cov).to(t.device).permute(2, 1, 0)
         sigma_t[:, 1:, 1:] = self.compute_YiYj(t)
         return sigma_t[:, None, None, None, :, :]
 

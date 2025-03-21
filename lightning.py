@@ -138,7 +138,7 @@ class GFDMLit(pl.LightningModule):
             noise = (xi - s_t) / std
             x_t = xi + mean[:, :, :, :, 0] - s_t
 
-        score = self(x_t, t, *args)
+        score = self(x_t.float(), t, *args)
         loss = torch.square(-score + noise)
         loss = torch.mean(loss)
 

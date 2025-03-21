@@ -56,16 +56,16 @@ def omega_optimized(
         return output
 
 
-def gamma_by_r(num_k, r, offset=0.0, device="cpu"):
+def gamma_by_r(num_k, r, offset=0.0, device="cpu", dtype=torch.float64):
     n = (num_k + 1) / 2 + offset
-    k = torch.arange(1, num_k + 1, device=device)
+    k = torch.arange(1, num_k + 1, device=device, dtype=dtype)
     gamma = r ** (k - n)
     return gamma
 
 
-def gamma_by_gamma_max(num_k, gamma_max, offset=0.0, device="cpu"):
+def gamma_by_gamma_max(num_k, gamma_max, offset=0.0, device="cpu", dtype=torch.float64):
     r = gamma_max ** (2 / (num_k - 1 - 2 * offset))
-    return gamma_by_r(num_k, r, offset, device=device)
+    return gamma_by_r(num_k, r, offset, device=device, dtype=dtype)
 
 
 def gamma_by_range(num_k, gamma_min, gamma_max):

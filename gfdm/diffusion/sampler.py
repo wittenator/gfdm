@@ -39,16 +39,18 @@ def inference(model, device="cpu"):
 
 
 def get_score(score_fn, z0, t0, dif, time_weight, *args, **kwargs):
+    t0 = t0.double()
+    z0 = z0.double()
 
     if dif.K == 0:
         std = torch.sqrt(dif.brown_var(t0))[:, None, None, None]
         score = -score_fn(z0, time_weight * t0[:, None], *args, **kwargs) / std
     else:
-        x_t = z0[:, :, :, :, 0].clone()
+        x_t = z0[:, :, :, :, 0].clone().float()
         y_t = z0[:, :, :, :, 1:].clone()
 
         sigma_t, _, corr, cov_yy, alpha, var_x, var_c = dif.marginal_stats(t0)
-        s_t = torch.sum(alpha * y_t, dim=-1)
+        s_t = torch.sum(alpha * y_t, dim=-1).float()
 
         assert torch.all(
             (var_x - var_c) > 0
@@ -98,7 +100,7 @@ class AugmentedEulerMaruyama:
         self.conditioning = conditioning
         self.time_weight = time_weight
 
-    def init_process(self, batch, reverse=True, noise=None, steps=1000):
+    def init_process(self, batch, reverse=True, noise=None, steps=1000, dtype=torch.float64):
 
         device = batch.device
 
@@ -108,24 +110,24 @@ class AugmentedEulerMaruyama:
             bs, c, h, w = batch.shape
             z_T = torch.cat(
                 [
-                    batch[:, :, :, :, None],
-                    torch.zeros((bs, c, h, w, self.dif.K), device=device),
+                    batch[:, :, :, :, None].to(dtype),
+                    torch.zeros((bs, c, h, w, self.dif.K), device=device, dtype=dtype),
                 ],
                 dim=-1,
             )
             if noise is None:
-                xi = torch.randn(bs, steps, c, h, w, self.dif.aug_dim, device=device)
+                xi = torch.randn(bs, steps, c, h, w, self.dif.aug_dim, device=device, dtype=dtype)
             else:
                 xi = noise
         return z_T, xi
 
-    def reverse_init(self, batch, noise=None, steps=1000):
+    def reverse_init(self, batch, noise=None, steps=1000, dtype=torch.float64):
 
         T = self.T
         device = batch.device
         bs, c, h, w = batch.shape
         noise = (
-            torch.randn(bs, steps + 1, c, h, w, device=device)
+            torch.randn(bs, steps + 1, c, h, w, device=device, dtype=dtype)
             if noise is None
             else noise[:, 0, :, :, :]
         )
@@ -134,10 +136,10 @@ class AugmentedEulerMaruyama:
         noise = noise.to(device)
         if self.dif.K == 0:
             std = torch.sqrt(self.dif.brown_var(T))
-            z_T = std * torch.randn(bs, c, h, w, device=device)
+            z_T = std * torch.randn(bs, c, h, w, device=device, dtype=dtype)
         else:
             cov_matrix, mean, corr, _, alpha, var_x, var_c = self.dif.marginal_stats(
-                torch.ones(bs, device=device) * T
+                torch.ones(bs, device=device, dtype=dtype) * T
             )
             squ_cov_matrix = torch.squeeze(cov_matrix).clone()
             _, aug_dim, _ = squ_cov_matrix.shape
@@ -174,7 +176,7 @@ class AugmentedEulerMaruyama:
 
         score = get_score(
             self.score_fn, z0, t0, self.dif, self.time_weight, *args, **kwargs
-        )
+        ).float()
 
         if self.dif.K == 0:
             drift = f - GG * score * (0.5 if mode == "ode" else 1.0)
