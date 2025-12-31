@@ -251,7 +251,7 @@ class FractionalDiffusion(ABC, nn.Module):
         A[0, 1:] = -2 * (self.g(t) * self.omega[0] * self.gamma[0]).cpu().numpy()
         A[1:, 1:] = np.diag((self.mu(t) - self.gamma[0]).cpu().numpy())
         b = np.zeros(num_k + 1)
-        b[0] = (self.omega[0].cpu().numpy().sum() * self.g(t).cpu().numpy()) ** 2
+        b[0] = (self.omega[0].cpu().numpy().sum() * self.g(t).cpu().numpy()).item() ** 2
         b[1:] = self.g(t).cpu().numpy() * (
             self.omega[0].cpu().numpy().sum()
             - self.numpy_compute_YiYj(t) @ (self.omega[0] * self.gamma[0]).cpu().numpy()
