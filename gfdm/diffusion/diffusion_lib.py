@@ -247,7 +247,7 @@ class FractionalDiffusion(ABC, nn.Module):
         num_k = self.K
         t = torch.as_tensor(t, dtype=self.dtype)
         A = np.zeros((num_k + 1, num_k + 1), dtype=np.float64)
-        A[0, 0] = 2 * self.mu(t).cpu().numpy()
+        A[0, 0] = 2 * self.mu(t).cpu().numpy().item()
         A[0, 1:] = -2 * (self.g(t) * self.omega[0] * self.gamma[0]).cpu().numpy()
         A[1:, 1:] = np.diag((self.mu(t) - self.gamma[0]).cpu().numpy())
         b = np.zeros(num_k + 1)
